@@ -52,6 +52,12 @@ p {
 
 /* Decoracion paletas de colores */
 
+.container {
+    display: flex;
+    gap: 10rem;
+    max-width: 1400px;
+    align-items: center; 
+}
 .palettes {
     display: flex;
     flex-direction: column;
@@ -65,47 +71,28 @@ p {
     padding: 1rem;
     border-radius: 1rem;
     background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3));
-
+    overflow: hidden; 
+    max-width: 570px;
 }
 
+.palette-track {
+    display: flex;
+    gap: 0.5rem;
+    width: max-content;
+    animation: slide-left 15s linear infinite;
+} 
+@keyframes slide-left {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
 .palette:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
-/* 🔹 COLORES */
 
 .color {
     width: 100px;
     height:100px;
     border-radius: 2rem;
-}
-
-/* 🔹 COLORES DE PRUEBA */
-/* PALETA 1 */
-.palette:nth-child(1) .color:nth-child(1) { background: #8dcfe0; }
-.palette:nth-child(1) .color:nth-child(2) { background: #d4beca; }
-.palette:nth-child(1) .color:nth-child(3) { background: #de516f; }
-.palette:nth-child(1) .color:nth-child(4) { background: #6e0f1c; }
-.palette:nth-child(1) .color:nth-child(5) { background: #9c6e7a; }
-
-/* PALETA 2 */
-.palette:nth-child(2) .color:nth-child(1) { background: #9c6e7a; }
-.palette:nth-child(2) .color:nth-child(2) { background: #6e0f1c; }
-.palette:nth-child(2) .color:nth-child(3) { background: #de516f; }
-.palette:nth-child(2) .color:nth-child(4) { background: #d4beca; }
-.palette:nth-child(2) .color:nth-child(5) { background: #8dcfe0; }
-
-/* PALETA 3 */
-.palette:nth-child(3) .color:nth-child(1) { background: #10ac84; }
-.palette:nth-child(3) .color:nth-child(2) { background: #f368e0; }
-.palette:nth-child(3) .color:nth-child(3) { background: #ff9f43; }
-.palette:nth-child(3) .color:nth-child(4) { background: #ee5253; }
-.palette:nth-child(3) .color:nth-child(5) { background: #222f3e; }
-
-.container {
-    display: flex;
-    gap: 10rem;
-    max-width: 1400px;
-    align-items: center; 
 }
