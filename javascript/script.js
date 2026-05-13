@@ -1,24 +1,42 @@
 
 // Funcion para obtener un color aleatorio
 
-const hex = [1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F"];
+const hex = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F"];
 const btn = document.getElementById("btn");
 const box = document.querySelectorAll(".box");
 const hexColors = document.querySelectorAll(".hexColors");
 const hslColor = document.querySelectorAll(".hslColor");
 const paletteSize = document.getElementById("paletteSize");
+const options = document.querySelectorAll(".option");
+const slider = document.querySelector(".slider");
+
+
+
+hslColor.forEach(function(color){
+    color.style.display = "none";
+});
+
+
+// Tamaño de la paleta 6 8 o 9
+
 
 btn.addEventListener("click", function () {
+    const size = parseInt(paletteSize.value) || 9;
     box.forEach(function (box, index) {
-        let hexColor = "#";
-        for (let i = 0; i < 6; i++) {
-            hexColor += hex[getRandomNumber()];
+        if (index < size) {
+            box.style.display = "flex";
+            let hexColor = "#";
+            for (let i = 0; i < 6; i++) {
+                hexColor += hex[getRandomNumber()];
+            }
+            box.style.backgroundColor = hexColor;
+            hexColors[index].textContent = hexColor;
+            hslColor[index].textContent = hexToHsl(hexColor);
+        } else {
+            box.style.display = "none";
         }
-        box.style.backgroundColor = hexColor;
-        hexColors[index].textContent = hexColor;
-        hslColor[index].textContent = hexToHsl(hexColor);
     });
-});
+});  
 
 function getRandomNumber() {
     return Math.floor(Math.random() * hex.length);
@@ -43,13 +61,10 @@ function hexToHsl(hex) {
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
     const delta = max - min;
-
     // Luminosidad
     let l = (max + min) / 2;
-
     // Saturación
     let s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-
     // Tono (Hue)
     let h = 0;
     if (delta !== 0) {
@@ -59,34 +74,12 @@ function hexToHsl(hex) {
         h = Math.round(h * 60);
         if (h < 0) h += 360;
     }
-
     s = Math.round(s * 100);
     l = Math.round(l * 100);
-
     return `hsl(${h}, ${s}%, ${l}%)`;
 }
 
-// Tamaño de la paleta 6 8 o 9
 
-btn.addEventListener("click", function () {
-    const size = parseInt(paletteSize.value) || 9;
-
-    box.forEach(function (box, index) {
-        if (index < size) {
-            box.style.display = "flex";
-
-            let hexColor = "#";
-            for (let i = 0; i < 6; i++) {
-                hexColor += hex[getRandomNumber()];
-            }
-            box.style.backgroundColor = hexColor;
-            hexColors[index].textContent = hexColor;
-            hslColor[index].textContent = hexToHsl(hexColor);
-        } else {
-            box.style.display = "none";
-        }
-    });
-});
 
 
 // Cuando se oprime la opcion se cambia el tamaño de la paleta
@@ -99,6 +92,37 @@ paletteSize.addEventListener("change", function () {
             box.style.display = "flex";
         } else {
             box.style.display = "none";
+        }
+    });
+});
+
+
+// TOGGLE HEX / HSL
+
+
+options.forEach(function(option, index){
+    option.addEventListener("click", function(){
+        options.forEach(function(btn){
+            btn.classList.remove("active");
+        });
+        option.classList.add("active");
+        slider.style.transform = `translateX(${index * 100}%)`;
+        const format = option.dataset.format;
+        if(format === "hex"){
+            hexColors.forEach(function(color){
+                color.style.display = "inline";
+            });
+            hslColor.forEach(function(color){
+                color.style.display = "none";
+            });
+        }
+        else{
+            hexColors.forEach(function(color){
+                color.style.display = "none";
+            });
+            hslColor.forEach(function(color){
+                color.style.display = "inline";
+            });
         }
     });
 });
