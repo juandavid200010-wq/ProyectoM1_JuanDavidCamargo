@@ -1,12 +1,17 @@
-.container{
+/* Caja de paleta de colores */
+
+.palette-container{
     display: flex;
     gap: 0.5rem;
 }
 
 .box{
+    display: flex;
+    flex-direction: column;
     border: 3px solid;
     width: 5rem;
     height: 30rem;
+
 }
 
 /* Bonotes copiar y candado */
@@ -72,6 +77,32 @@
 
 .toggle button.active{
     color:white;
+}
+
+
+/* Mensaje del boton generar paleta de colores */
+
+
+.btn-container{
+    position:relative;
+    display:inline-block;
+} 
+#message{
+    position:absolute;
+    top:-40px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#222;
+    color:white;
+    padding:8px 14px;
+    border-radius:10px;
+    opacity:0;
+    transition:0.3s;
+    pointer-events: none;
+}
+
+#message.show{
+    opacity:1;
 }
 
 

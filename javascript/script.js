@@ -1,6 +1,3 @@
-
-// Funcion para obtener un color aleatorio
-
 const hex = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F"];
 const btn = document.getElementById("btn");
 const box = document.querySelectorAll(".box");
@@ -9,7 +6,10 @@ const hslColor = document.querySelectorAll(".hslColor");
 const paletteSize = document.getElementById("paletteSize");
 const options = document.querySelectorAll(".option");
 const slider = document.querySelector(".slider");
-
+const message = document.getElementById("message");
+const padlockBtns = document.querySelectorAll(".padlock-btn");
+const heartBtn = document.querySelector('.heart-btn');
+const savedList = document.getElementById('saved-list');
 
 
 hslColor.forEach(function(color){
@@ -17,39 +17,59 @@ hslColor.forEach(function(color){
 });
 
 
-// Tamaño de la paleta 6 8 o 9
-
-
 btn.addEventListener("click", function () {
+    generatePalette();
+    showMessage("Paleta Generada");
+
+});
+
+//Genera la paleta de colores. 
+
+function generatePalette () {
     const size = parseInt(paletteSize.value) || 9;
     box.forEach(function (box, index) {
         if (index < size) {
             box.style.display = "flex";
+            if (box.classList.contains('locked')) return; //Bloqueo de color  
             let hexColor = "#";
             for (let i = 0; i < 6; i++) {
                 hexColor += hex[getRandomNumber()];
             }
             box.style.backgroundColor = hexColor;
             hexColors[index].textContent = hexColor;
-            hslColor[index].textContent = hexToHsl(hexColor);
+            hslColor[index].textContent = hexToHsl(hexColor); 
         } else {
             box.style.display = "none";
         }
     });
-});  
+} 
+
+// Se obtiene un numero random.
 
 function getRandomNumber() {
     return Math.floor(Math.random() * hex.length);
 }
 
+//Muestra mensaje "Paleta generada"
+let timeout;
+function showMessage(texto){
+    if (timeout) clearTimeout(timeout);  // ← Solo limpia si existe
+    message.textContent = texto;
+    message.classList.add("show");
+    timeout = setTimeout(() => {
+        message.classList.remove("show");
+    }, 800);
+}
 
 
-// ✅ Función para convertir de hex a hsl
+
+
+
+//  Función para convertir de hex a hsl
 
 
 function hexToHsl(hex) {
     hex = hex.replace(/^#/, '');
-
     if (hex.length === 3) 
         {hex = hex.split('').map(char => char + char).join('');
     }
@@ -97,7 +117,7 @@ paletteSize.addEventListener("change", function () {
 });
 
 
-// TOGGLE HEX / HSL
+// Boton TOGGLE HEX / HSL
 
 
 options.forEach(function(option, index){
@@ -126,3 +146,93 @@ options.forEach(function(option, index){
         }
     });
 });
+
+
+
+// boton para copiar los colores 
+
+
+padlockBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+    const box = btn.closest(".box");
+    const colorText = box.querySelector(".hexColors").innerText;
+    navigator.clipboard.writeText(colorText)
+        .then(() => {
+        // Feedback visual al usuario
+        btn.innerText = "✅";
+        setTimeout(() => {
+        btn.innerHTML = "&#128196;";
+        }, 800);
+        })
+    .catch(err => console.error('Error al copiar:', err));
+    });
+});
+
+
+// Bloquea los colores con el candado 
+
+document.querySelectorAll('.box').forEach(card => {
+    const lockBtn = card.querySelector('.lock-btn');
+    const copyBtn = card.querySelector('.padlock-btn');
+    lockBtn.addEventListener('click', () => {
+        const isLocked = lockBtn.dataset.locked === 'true';
+        if (isLocked) {
+            lockBtn.dataset.locked = 'false';
+            lockBtn.innerHTML = '&#128274;';
+            card.classList.remove('locked');
+    }   else {
+            lockBtn.dataset.locked = 'true';
+            lockBtn.innerHTML = '&#128275;';
+            card.classList.add('locked');
+    }
+    });
+});
+
+
+// Guarda las paletas los colores 
+
+
+let savedPalettes = [];
+heartBtn.addEventListener('click', () => {
+    const currentPalette = [];
+    box.forEach(b => {
+        if (b.style.display !== 'none') {
+            currentPalette.push({
+                hex: b.querySelector('.hexColors').textContent,
+                hsl: b.querySelector('.hslColor').textContent
+            });
+        }
+    });
+    savedPalettes.push(currentPalette);renderSaved();
+});
+
+function renderSaved() {
+    savedList.innerHTML = '';
+    savedPalettes.forEach((palette, i) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex; gap:8px; ' +  
+        ' margin-bottom:12px; align-items:center;';
+    palette.forEach(color => {
+        const swatch = document.createElement('div');
+        swatch.title = color.hex;
+        swatch.style.cssText = `
+        width: 50px; height: 50px;
+        background: ${color.hex};
+        border-radius: 8px;
+        cursor: pointer;
+        border: 0.5px solid #ccc;`;
+        swatch.addEventListener('click', () => {
+        navigator.clipboard.writeText(color.hex);
+    });
+    row.appendChild(swatch);
+    });
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = '&#128465;';
+    deleteBtn.addEventListener('click', () => {
+        savedPalettes.splice(i, 1);
+        renderSaved();
+    });
+    row.appendChild(deleteBtn);
+    savedList.appendChild(row);
+});
+}
