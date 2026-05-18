@@ -1,49 +1,136 @@
+header{
+    display: flex;
+    flex-direction:column;
+    justify-content:center; 
+    align-items:center; 
+    position:relative;
+    top: 80px;
+} 
+
+body {
+    background: url(../img/favicon.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    background-attachment: fixed; 
+}
+h2{
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+
+}
+
 /* Caja de paleta de colores */
 
 .palette-container{
     display: flex;
-    gap: 0.5rem;
+    justify-content:center; 
+    align-items:center; 
+    position:relative;
+    top: 120px;
+    gap: 0.3rem;
+    background-color:#f3f3f3; 
+    padding: 10px;
+    border: solid 1px #dad8f6; 
+    border-radius: 10px;
+    width:fit-content;
+    margin:0 auto;
 }
-
 .box{
     display: flex;
     flex-direction: column;
-    border: 3px solid;
-    width: 5rem;
+    justify-content:flex-end; 
+    align-items:center; 
+    width: 7rem;
     height: 30rem;
+    border: solid #dad8f6 1px;
+    border-radius: 10px;
+    transition: width 0.3s ease;
 
 }
-
-/* Bonotes copiar y candado */
-
-.lock-btn{
-    background:none;
-    border:none;
+.box:hover {
+    width: 15rem;
 }
 
-.padlock-btn{
-    background:none;
-    border:none;
+
+/* Botones de la paleta */
+
+.functionPaletteButtons{
+    display: flex;
+    justify-content:center; 
+    align-items:center; 
+    position:relative;
+    top: 140px;
+    gap: 4rem;
 }
-.open-lock-btn{
-    background:none;
-    border:none;
-}
-.heart-btn{
-    background:none;
-    border:none;
-}
-.empty-heart-btn{
-    background:none;
-    border:none;
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+.functionPaletteButtons {
+    font-family: 'Space Grotesk', sans-serif;
 }
 
-/* Botones para elegir hsl y hex */
+
+/* Boton del corazon */
+
+
+.heart-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 0.5px solid #F4C0D1;
+    background: #FBEAF0;
+    cursor: pointer;
+}
+.heart-btn:hover {
+    background: #F4C0D1;
+    transform: scale(1.15);
+}
+.heart-btn:active {
+    transform: scale(0.9);
+}
+
+#paletteSize:hover {
+    border-color: #AFA9EC;
+    background-color: #EEEDFE;
+    color: #3C3489;
+}
+#paletteSize:focus {
+    border-color: #7F77DD;
+}
+
+
+/* boton Selector de tamaño */
+
+
+#paletteSize {
+    height: 42px;
+    border-radius: 12px;
+    border: 2px solid #a9a3ea;
+    background-color: #7369e1;
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    padding: 0 32px 0 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+}
+#paletteSize:hover {
+    border-color: #AFA9EC;
+    background-color: #EEEDFE;
+    color: #3C3489;
+}
+#paletteSize:focus {
+    border-color: #7F77DD;
+}
+
+
+/* Toggle HEX / HSL */
 
 .toggle{
     position:relative;
     display:flex;
-    background:#222;
+    background:#7369e1;
     border-radius:50px;
     padding:5px;
     width:220px;
@@ -61,7 +148,6 @@
     transition:0.3s;
     z-index:0;
 }
-
 .toggle button{
     flex:1;
     border:none;
@@ -78,6 +164,61 @@
 .toggle button.active{
     color:white;
 }
+.toggle .option {
+    height: 34px;
+    min-width: 52px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    padding: 0 12px;
+}
+
+.toggle .option:not(.active):hover {
+    background: #EEEDFE;
+    color: #534AB7;
+}
+
+
+/* Boton de generar paleta */
+
+
+.btn-hero {
+    height: 42px;
+    padding: 0 20px;
+    border-radius: 12px;
+    background: #534AB7;
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: background 0.15s, transform 0.15s;
+    border: #534AB7;
+}
+.btn-hero:hover {
+    background: #4f46e5;
+    transform: scale(1.04);
+}
+.btn-hero:active {
+    transform: scale(0.97);
+}
+
+
+
+/* Bonotes copiar y candado */
+
+.lock-btn,
+.padlock-btn,
+.open-lock-btn,
+.heart-btn,
+.empty-heart-btn {
+    background: none;
+    border: none;
+}
+
+
+
 
 
 /* Mensaje del boton generar paleta de colores */
@@ -89,20 +230,79 @@
 } 
 #message{
     position:absolute;
-    top:-40px;
+    top:-35px;
     left:50%;
     transform:translateX(-50%);
-    background:#222;
-    color:white;
-    padding:8px 14px;
-    border-radius:10px;
+    color:rgb(255, 254, 254);
     opacity:0;
-    transition:0.3s;
-    pointer-events: none;
+    transition:0.1s;
+    width: 150px;
+    background-color: #7F77DD;
+    border-radius: 10px;
+    padding: 2px;
 }
 
 #message.show{
     opacity:1;
+}
+
+.hexColors, .hslColor{
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    background-color: rgb(255, 255, 255, 0.5);
+    border-radius: 5px;
+    padding: 3px;
+    font-size: 15px;
+}
+
+
+/* Presentacion antes de generar la paleta */
+
+.box.sleeping {
+    background: #a4a0eb;
+    position: relative;
+    overflow: hidden;
+}
+.box.sleeping::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    animation: shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { left: -100%; }
+    50% { left: 140%; }
+}
+.box.paused::after {
+    animation-play-state: paused;
+}
+
+/* Paletas sin colores ni simbolos pero despues aparecen */
+
+.hexColors, .lock-btn, .padlock-btn, .hslColor {
+    visibility: hidden;
+}
+.hexColors.visible, .lock-btn.visible, .padlock-btn.visible, .hslColor.visible {
+    visibility: visible;
+}
+
+
+
+
+
+/* Estas son las paletas guardadas  */
+
+#saved-palettes{
+    display: flex;
+    flex-direction:column;
+    justify-content:center; 
+    align-items:center; 
+    position:relative;
+    top: 200px;
+    gap: 0.56rem;
 }
 
 

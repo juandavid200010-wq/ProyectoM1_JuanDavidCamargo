@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/crear.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <title>PincelStudio</title>
 </head>
 <body>
     <header>
-        <img class="logoPrimary" src="../img/logo.png" alt="Logo de pincel">
+        <!-- <img class="logoPrimary" src="../img/logo.png" alt="Logo de pincel"> -->
         <h1>PincelStudio</h1>
+        <h2>Generador de paletas</h2>
     </header>
     <main>
         <div class="palette-container">
@@ -71,24 +73,26 @@
                 <button class="padlock-btn">&#128196;</button>
             </div>
         </div>
-        <button class="heart-btn">&#10084;&#65039;</button>
-        <select id="paletteSize">
-        <option value="" disabled selected>Tamaño</option>
-            <option value="6">6 colores</option>
-            <option value="8">8 colores</option>
-            <option value="9">9 colores</option>
-        </select>
-        <div class="btn-container">
-            <button id="btn" class="btn-hero">Generar paleta</button>
-            <p id="message"></p>
-        </div>
-        <div class="toggle">
-            <div class="slider"></div>
-            <button class="option active" data-format="hex">HEX</button>
-            <button class="option" data-format="hsl">HSL</button>
+        <div class="functionPaletteButtons">
+            <button class="heart-btn">&#10084;&#65039;</button>
+            <select id="paletteSize">
+                <option value="" disabled selected>TAMAÑO</option>
+                    <option value="6">6 colores</option>
+                    <option value="8">8 colores</option>
+                    <option value="9">9 colores</option>
+            </select>
+            <div class="toggle">
+                <div class="slider"></div>
+                <button class="option active" data-format="hex">HEX</button>
+                <button class="option" data-format="hsl">HSL</button>
+            </div>
+            <div class="btn-container">
+                <button id="btn" class="btn-hero">GENERAR PALETA</button>
+                <p id="message"></p>
+            </div>
         </div>
         <section id="saved-palettes">
-            <h2>Paletas guardadas</h2>
+            <h3>Paletas guardadas</h3>
             <div id="saved-list"></div>
         </section>
         <script src="../javascript/script.js"></script>

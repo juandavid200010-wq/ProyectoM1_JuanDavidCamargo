@@ -12,20 +12,32 @@ const heartBtn = document.querySelector('.heart-btn');
 const savedList = document.getElementById('saved-list');
 
 
+
+box.forEach(b => b.classList.add('sleeping'));
+
+
+
 hslColor.forEach(function(color){
     color.style.display = "none";
 });
 
 
+// Acciones despues tocar el boton generar paleta
+
+
 btn.addEventListener("click", function () {
     generatePalette();
-    showMessage("Paleta Generada");
-
+    showMessage("Paleta Generada ✅");
+    showPaletteCodes();
+    document.querySelectorAll(".box").forEach(box => {
+        box.classList.add("paused");
+    });
 });
 
 //Genera la paleta de colores. 
 
 function generatePalette () {
+    box.forEach(b => b.classList.add('sleeping'));
     const size = parseInt(paletteSize.value) || 9;
     box.forEach(function (box, index) {
         if (index < size) {
@@ -51,6 +63,7 @@ function getRandomNumber() {
 }
 
 //Muestra mensaje "Paleta generada"
+
 let timeout;
 function showMessage(texto){
     if (timeout) clearTimeout(timeout);  // ← Solo limpia si existe
@@ -236,3 +249,12 @@ function renderSaved() {
     savedList.appendChild(row);
 });
 }
+
+
+// Funcion para visualizar los codigo de colores y simbolos
+
+    function showPaletteCodes(){
+document.querySelectorAll(".hexColors, .lock-btn, .padlock-btn, .hslColor").forEach(el => {
+        el.classList.add("visible");
+        });
+    }
