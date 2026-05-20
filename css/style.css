@@ -40,14 +40,55 @@ p {
     text-align: justify;
 }
 
+
+/* Boton de crear */
+
+
 #createButton {
-    margin-top: 4rem;
-    border: 3px solid rgb(84, 255, 235) ;
-    border-radius: 40px;
-    padding: 1rem 2rem;
-    color: rgb(0, 0, 0);
-    background-color: rgb(157, 246, 243);
-    
+    font-family: 'Playfair Display', serif;
+    font-size: 35px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #000000;
+    background: linear-gradient(135deg, #99f0fe 0%, #ea9eff 50%, #fe83ac 100%);
+    border: none;
+    border-radius: 14px;
+    padding: 14px 36px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 4px 18px rgba(91, 75, 245, 0.38);
+    margin-top: 60px;
+}
+
+#createButton::after {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: -60%;
+    width: 60%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: skewX(-20deg) translateX(-100%);
+    transition: transform 0.55s ease;
+}
+
+#createButton:hover::after {
+    transform: skewX(-20deg) translateX(520%);
+}
+
+#createButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(91, 75, 245, 0.48);
+}
+
+#createButton:active {
+    transform: translateY(0px) scale(0.97);
+}
+
+a:has(#createButton) {
+    text-decoration: none;
 }
 
 /* Decoracion paletas de colores */
@@ -96,3 +137,4 @@ p {
     height:100px;
     border-radius: 2rem;
 }
+
